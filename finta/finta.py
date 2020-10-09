@@ -300,7 +300,7 @@ class TA:
                     kama.append(None)
 
         sma["KAMA"] = pd.Series(
-            kama, index=sma.index, name="{0} period KAMA.".format(period)
+            kama, index=sma.index, name="{0} period KAMA".format(period)
         )  ## apply the kama list to existing index
         return sma["KAMA"]
 
@@ -320,7 +320,7 @@ class TA:
 
         ema = pd.Series(
             (ohlc[column] + (ohlc[column].diff(lag))),
-            name="{0} period ZLEMA.".format(period),
+            name="{0} period ZLEMA".format(period),
         )
 
         zlema = pd.Series(
@@ -351,7 +351,7 @@ class TA:
         _close = ohlc[column].rolling(period, min_periods=period)
         wma = _close.apply(linear(weights), raw=True)
 
-        return pd.Series(wma, name="{0} period WMA.".format(period))
+        return pd.Series(wma, name="{0} period WMA".format(period))
 
     @classmethod
     def HMA(cls, ohlc: DataFrame, period: int = 16) -> Series:
@@ -374,7 +374,7 @@ class TA:
         ohlc["deltawma"] = 2 * wmaf - wmas
         hma = cls.WMA(ohlc, column="deltawma", period=sqrt_length)
 
-        return pd.Series(hma, name="{0} period HMA.".format(period))
+        return pd.Series(hma, name="{0} period HMA".format(period))
 
     @classmethod
     @inputvalidator(input_="ohlcv")
@@ -403,7 +403,7 @@ class TA:
                 evwma.append(evwma[-1] * x[1] + y[1])
 
         return pd.Series(
-            evwma[1:], index=ohlcv.index, name="{0} period EVWMA.".format(period),
+            evwma[1:], index=ohlcv.index, name="{0} period EVWMA".format(period),
         )
 
     @classmethod
@@ -417,7 +417,7 @@ class TA:
 
         return pd.Series(
             ((ohlcv["volume"] * cls.TP(ohlcv)).cumsum()) / ohlcv["volume"].cumsum(),
-            name="VWAP.",
+            name="VWAP",
         )
 
     @classmethod
@@ -1064,7 +1064,7 @@ class TA:
             * (abs(dmi["DI+"] - dmi["DI-"]) / (dmi["DI+"] + dmi["DI-"]))
             .ewm(alpha=1 / period, adjust=adjust)
             .mean(),
-            name="{0} period ADX.".format(period),
+            name="{0} period ADX".format(period),
         )
 
     @classmethod
@@ -1169,7 +1169,7 @@ class TA:
 
         return pd.Series(
             cls.STOCH(ohlc, stoch_period).rolling(center=False, window=period).mean(),
-            name="{0} period STOCH %D.".format(period),
+            name="{0} period STOCH %D".format(period),
         )
 
     @classmethod
@@ -1185,7 +1185,7 @@ class TA:
             ((rsi - rsi.min()) / (rsi.max() - rsi.min()))
             .rolling(window=stoch_period)
             .mean(),
-            name="{0} period stochastic RSI.".format(rsi_period),
+            name="{0} period stochastic RSI".format(rsi_period),
         )
 
     @classmethod
@@ -1546,8 +1546,8 @@ class TA:
     def EBBP(cls, ohlc: DataFrame) -> DataFrame:
         """Bull power and bear power by Dr. Alexander Elder show where today’s high and low lie relative to the a 13-day EMA"""
 
-        bull_power = pd.Series(ohlc["high"] - cls.EMA(ohlc, 13), name="Bull.")
-        bear_power = pd.Series(ohlc["low"] - cls.EMA(ohlc, 13), name="Bear.")
+        bull_power = pd.Series(ohlc["high"] - cls.EMA(ohlc, 13), name="Bull")
+        bear_power = pd.Series(ohlc["low"] - cls.EMA(ohlc, 13), name="Bear")
 
         return pd.concat([bull_power, bear_power], axis=1)
 
@@ -1570,7 +1570,7 @@ class TA:
         _emv = pd.Series(distance / box_ratio)
 
         return pd.Series(
-            _emv.rolling(window=period).mean(), name="{0} period EMV.".format(period)
+            _emv.rolling(window=period).mean(), name="{0} period EMV".format(period)
         )
 
     @classmethod
@@ -1626,8 +1626,8 @@ class TA:
         varg = ohlc["volume"].ewm(span=period, adjust=adjust).mean()
         nv = ohlc["volume"] / varg
 
-        nbfraw = pd.Series(nbp * nv, name="Buy.")
-        nsfraw = pd.Series(nsp * nv, name="Sell.")
+        nbfraw = pd.Series(nbp * nv, name="Buy")
+        nsfraw = pd.Series(nsp * nv, name="Sell")
 
         return pd.concat([nbfraw, nsfraw], axis=1)
 
@@ -1648,8 +1648,8 @@ class TA:
         varg = ohlc["volume"].ewm(span=period, adjust=adjust).mean()
         nv = ohlc["volume"] / varg
 
-        nbf = pd.Series((nbp * nv).ewm(span=20, adjust=adjust).mean(), name="Buy.")
-        nsf = pd.Series((nsp * nv).ewm(span=20, adjust=adjust).mean(), name="Sell.")
+        nbf = pd.Series((nbp * nv).ewm(span=20, adjust=adjust).mean(), name="Buy")
+        nsf = pd.Series((nsp * nv).ewm(span=20, adjust=adjust).mean(), name="Sell")
 
         return pd.concat([nbf, nsf], axis=1)
 
@@ -1702,11 +1702,11 @@ class TA:
 
         l = pd.Series(
             ohlc[column].rolling(window=period_2).max() - cls.ATR(ohlc, 22) * k,
-            name="Long.",
+            name="Long",
         )
         s = pd.Series(
             ohlc[column].rolling(window=period_1).min() - cls.ATR(ohlc, 22) * k,
-            name="Short.",
+            name="Short",
         )
 
         return pd.concat([s, l], axis=1)
@@ -1721,7 +1721,7 @@ class TA:
         _open = ohlc["open"].tail(period)
 
         return pd.Series(
-            (_close - _open) / period, name="{0} period QSTICK.".format(period)
+            (_close - _open) / period, name="{0} period QSTICK".format(period)
         )
 
     @classmethod
@@ -1763,8 +1763,8 @@ class TA:
         )
         ci = (ap - esa) / (0.015 * d)
 
-        wt1 = pd.Series(ci.ewm(span=average_lenght, adjust=adjust).mean(), name="WT1.")
-        wt2 = pd.Series(wt1.rolling(window=4).mean(), name="WT2.")
+        wt1 = pd.Series(ci.ewm(span=average_lenght, adjust=adjust).mean(), name="WT1")
+        wt2 = pd.Series(wt1.rolling(window=4).mean(), name="WT2")
 
         return pd.concat([wt1, wt2], axis=1)
 
@@ -1787,7 +1787,7 @@ class TA:
 
         return pd.Series(
             (log((1 + _smooth) / (1 - _smooth))).ewm(span=3, adjust=adjust).mean(),
-            name="{0} period FISH.".format(period),
+            name="{0} period FISH".format(period),
         )
 
     @classmethod
@@ -1900,7 +1900,7 @@ class TA:
         tr = np.amax(vectors_stacked, axis=0)
         vr = pd.Series(
             tr / cls.EMA(ohlc.close, period=period),
-            name="{0} period VR.".format(period),
+            name="{0} period VR".format(period),
         )
 
         return vr
@@ -2132,7 +2132,7 @@ class TA:
 
         return pd.Series(
             100 * (MACD - (STOK * MACD)) / ((STOD * MACD) - (STOK * MACD)),
-            name="{0} period STC.".format(period),
+            name="{0} period STC".format(period),
         )
 
 

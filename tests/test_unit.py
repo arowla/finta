@@ -592,9 +592,9 @@ def test_ebbp():
 
     eb = TA.EBBP(ohlc)
 
-    assert isinstance(eb["Bull."], series.Series)
-    assert isinstance(eb["Bear."], series.Series)
-    assert eb["Bull."].values[-1] == -285.40231904032862
+    assert isinstance(eb["Bull"], series.Series)
+    assert isinstance(eb["Bear"], series.Series)
+    assert eb["Bull"].values[-1] == -285.40231904032862
 
 
 def test_emv():
@@ -620,11 +620,11 @@ def test_basp():
 
     basp = TA.BASP(ohlc)
 
-    assert isinstance(basp["Buy."], series.Series)
-    assert isinstance(basp["Sell."], series.Series)
+    assert isinstance(basp["Buy"], series.Series)
+    assert isinstance(basp["Sell"], series.Series)
 
-    assert basp["Buy."].values[-1] == 0.066916805574281202
-    assert basp["Sell."].values[-1] == 0.091486900946605054
+    assert basp["Buy"].values[-1] == 0.066916805574281202
+    assert basp["Sell"].values[-1] == 0.091486900946605054
 
 
 def test_baspn():
@@ -632,11 +632,11 @@ def test_baspn():
 
     basp = TA.BASPN(ohlc)
 
-    assert isinstance(basp["Buy."], series.Series)
-    assert isinstance(basp["Sell."], series.Series)
+    assert isinstance(basp["Buy"], series.Series)
+    assert isinstance(basp["Sell"], series.Series)
 
-    assert basp["Buy."].values[-1] == 0.56374213100174275
-    assert basp["Sell."].values[-1] == 0.74103021131003344
+    assert basp["Buy"].values[-1] == 0.56374213100174275
+    assert basp["Sell"].values[-1] == 0.74103021131003344
 
 
 def test_cmo():
@@ -653,11 +653,11 @@ def test_chandelier():
 
     chan = TA.CHANDELIER(ohlc)
 
-    assert isinstance(chan["Long."], series.Series)
-    assert isinstance(chan["Short."], series.Series)
+    assert isinstance(chan["Long"], series.Series)
+    assert isinstance(chan["Short"], series.Series)
 
-    assert chan["Long."].values[-1] == 6723.8927646477259
-    assert chan["Short."].values[-1] == 5326.4927656377258
+    assert chan["Long"].values[-1] == 6723.8927646477259
+    assert chan["Short"].values[-1] == 5326.4927656377258
 
 
 def test_qstick():
@@ -680,11 +680,11 @@ def test_wto():
 
     wto = TA.WTO(ohlc)
 
-    assert isinstance(wto["WT1."], series.Series)
-    assert isinstance(wto["WT2."], series.Series)
+    assert isinstance(wto["WT1"], series.Series)
+    assert isinstance(wto["WT2"], series.Series)
 
-    assert wto["WT1."].values[-1] == -60.290069910634649
-    assert wto["WT2."].values[-1] == -61.84105024273525
+    assert wto["WT1"].values[-1] == -60.290069910634649
+    assert wto["WT2"].values[-1] == -61.84105024273525
 
 
 def test_fish():
